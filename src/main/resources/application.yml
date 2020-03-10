@@ -1,0 +1,10 @@
+# General properties and default values for environment properties
+
+com:
+  finleap:
+    solarisgateway:
+      uri: http://localhost:8081
+
+##################################################################
+# Other Properties
+##################################################################
