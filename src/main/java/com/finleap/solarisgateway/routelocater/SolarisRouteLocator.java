@@ -12,18 +12,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class SolarisRouteLocator {
 
-    private String uri;
+  private String uri;
 
-    public SolarisRouteLocator(@Value("${" + SolarisGatewayConstant.Gateway.DEFAULT_URI_KEY + "}") String uri) {
-        this.uri = uri;
-    }
+  public SolarisRouteLocator(
+      @Value("${" + SolarisGatewayConstant.Gateway.DEFAULT_URI_KEY + "}") String uri) {
+    this.uri = uri;
+  }
 
-    @Bean
-    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
-        return builder.routes()
-                .route(r -> r.host("**")
-                        .uri(uri)
-                )
-                .build();
-    }
+  @Bean
+  public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+    return builder.routes()
+        .route(r -> r.host("**")
+            .uri(uri)
+        )
+        .build();
+  }
 }

@@ -12,15 +12,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class FilterConfiguration {
 
-    @Order(1)
-    @Bean
-    public GlobalFilter globalFilter() {
+  @Order(1)
+  @Bean
+  public GlobalFilter globalFilter() {
 
-        return (exchange, chain) -> {
+    return (exchange, chain) -> {
 
-            log.debug("Global filter will be execute and add the header ");
-            final ServerHttpRequest request = exchange.getRequest().mutate().header(SolarisGatewayConstant.Gateway.SECURITY_HEADER_KEY, Math.random() * 10 + "test").build();
-            return chain.filter(exchange.mutate().request(request).build());
-        };
-    }
+      log.debug("Global filter will be execute and add the header ");
+      final ServerHttpRequest request = exchange.getRequest().mutate()
+          .header(SolarisGatewayConstant.Gateway.SECURITY_HEADER_KEY, Math.random() * 10 + "test")
+          .build();
+      return chain.filter(exchange.mutate().request(request).build());
+    };
+  }
 }
