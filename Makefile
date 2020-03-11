@@ -8,3 +8,9 @@ uaa:
 		-p 8080:8080 \
 		--name uaatest \
 		cfidentity/uaa:latest
+
+build:
+	docker build -t sbg .
+
+run:
+	docker run sbg
