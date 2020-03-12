@@ -35,4 +35,4 @@ build_docker_compose:
   stage: build
   script:
     - ls
-    - docker-compose up -d --build .
+    - docker-compose up -d --build
