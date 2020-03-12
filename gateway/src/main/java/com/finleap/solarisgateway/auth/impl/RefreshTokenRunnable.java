@@ -43,12 +43,17 @@ public class RefreshTokenRunnable implements Runnable {
 
   private void refreshToken() {
 
-    final Token token = tokenClientService.getToken();
-    final GenericToken genericToken = (GenericToken) token;
-    setExpireTime(genericToken.getExpiresIn());
-    TokenPool.getInstance().set(token);
+    try {
+      final Token token = tokenClientService.getToken();
+      final GenericToken genericToken = (GenericToken) token;
+      setExpireTime(genericToken.getExpiresIn());
+      TokenPool.getInstance().set(token);
 
-    log.debug("Token refreshed expire time {}", expireTime);
+      log.debug("Token refreshed expire time {}", expireTime);
+
+    } catch (Throwable t) {
+      log.error("Token cannot be get from provider  " + t.getMessage());
+    }
   }
 
   private void setExpireTime(final Long expiresIn) {
