@@ -1,1 +1,5 @@
-rootProject.name = 'solarisgateway'
+rootProject.name = 'solaris-gateaway'
+
+include 'gateway'
+include 'resource-server'
+include 'uaa'

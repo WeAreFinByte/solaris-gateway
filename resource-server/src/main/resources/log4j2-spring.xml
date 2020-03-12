@@ -5,12 +5,12 @@
             <PatternLayout
                     pattern="[%d{MM:dd HH:mm:ss.SSS}] [%level] [%logger{36}] - %msg%n"/>
         </Console>
-        <File name="toAppFileAppender" fileName="logs/app.log">
+        <File name="toAppFileAppender" fileName="logs/resourceserver/app.log">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
             </PatternLayout>
         </File>
-        <File name="toConsoleFileAppender" fileName="logs/console.log">
+        <File name="toConsoleFileAppender" fileName="logs/resourceserver/console.log">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
             </PatternLayout>
@@ -20,13 +20,7 @@
         <Logger name="org.springframework.boot" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="com.finleap.solarisgateway.routelocater" level="debug" additivity="false">
-            <AppenderRef ref="toAppFileAppender"/>
-        </Logger>
-        <Logger name="com.finleap.solarisgateway.filter" level="debug" additivity="false">
-            <AppenderRef ref="toAppFileAppender"/>
-        </Logger>
-        <Logger name="com.finleap.solarisgateway.auth" level="debug" additivity="false">
+        <Logger name="com.finleap.oauth.resource" level="debug" additivity="false">
             <AppenderRef ref="toAppFileAppender"/>
         </Logger>
         <Root level="info">
