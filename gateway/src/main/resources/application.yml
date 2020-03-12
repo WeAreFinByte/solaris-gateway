@@ -1,0 +1,32 @@
+# General properties and default values for environment properties
+com:
+  finleap:
+    solarisgateway:
+      uri: "http://localhost:8081"
+      retry:
+        count: 2
+      auth:
+        provider: uaa
+        uaa:
+          httpmethod: POST
+          baseuri: "http://localhost:8080"
+          uri: /oauth/token
+          clientid: login-client
+          clientsecret: secret
+          granttype: client_credentials
+        solaris:
+          httpmethod: POST
+          baseuri: "http://localhost:8080"
+          uri: /oauth/token?grant_type={grant_type}&client_id={client_id}&client_secret={client_secret}
+          clientid: login-client
+          clientsecret: secret
+          granttype: client_credentials
+        token:
+          expire:
+            threshold: 10000
+
+##################################################################
+# Other Properties
+##################################################################
+server:
+  port: 8090
