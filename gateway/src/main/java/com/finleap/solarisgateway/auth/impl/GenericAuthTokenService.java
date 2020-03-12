@@ -16,7 +16,11 @@ public class GenericAuthTokenService implements AuthTokenService {
 
     final Token token = TokenPool.getInstance().get();
 
-    return ((GenericToken) token).getAccessToken();
+    if (null == token) {
+      log.warn("Authorization Token is empty. please check project config");
+    }
+
+    return null != token ? ((GenericToken) token).getAccessToken() : "";
   }
 
   @Override
