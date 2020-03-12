@@ -1,0 +1,38 @@
+stages:
+  - jar
+  - build
+
+jar_gateway:
+  image: openjdk:11
+  stage: jar
+  script:
+    - ./gradlew bootJar
+  artifacts:
+    paths:
+      - /builds/finbyte/solaris-gateaway/gateway/build/libs/
+
+build_gateway:
+  image: docker:18.09.7
+  stage: build
+  dependencies:
+    - jar_gateway
+  script:
+    - docker info
+    - docker build -f gateway/Dockerfile -t sbg ./gateway
+    - docker run sbg
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:18.09.7-dind
+
+build_docker_compose:
+  image: tmaier/docker-compose:latest
+  services:
+    - docker:18.09.7-dind
+  before_script:
+    - docker info
+    - docker-compose --version
+  stage: build
+  script:
+    - ls
+    - docker-compose up -d --build .

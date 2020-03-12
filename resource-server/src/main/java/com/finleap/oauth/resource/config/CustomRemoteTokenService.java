@@ -2,7 +2,6 @@ package com.finleap.oauth.resource.config;
 
 import java.io.IOException;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +13,6 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.util.MultiValueMap;
@@ -46,7 +44,7 @@ public class CustomRemoteTokenService implements ResourceServerTokenServices {
     public OAuth2Authentication loadAuthentication(String accessToken) throws AuthenticationException, InvalidTokenException {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
-        Map<String, Object> map = executeGet("http://localhost:8080/introspect?token=" + accessToken+"&scopes=password.write%2Cscim.userids", headers);
+        Map<String, Object> map = executeGet("http://uaa:8080/introspect?token=" + accessToken+"&scopes=password.write%2Cscim.userids", headers);
         if (map == null || map.isEmpty() || map.get("error") != null) {
             throw new InvalidTokenException("Token not allowed");
         }
