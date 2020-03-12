@@ -13,7 +13,6 @@ services:
       - spring_profiles=default,hsqldb
     volumes:
       - ${PWD}/uaa/uaa.yml:/uaa.yml
-      - ${PWD}/uaa/wait-for-it.sh:/wait-for-it.sh
   resource-server:
     build: resource-server
     ports:

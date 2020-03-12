@@ -10,20 +10,7 @@ jar_gateway:
   artifacts:
     paths:
       - /builds/finbyte/solaris-gateaway/gateway/build/libs/
-
-build_gateway:
-  image: docker:18.09.7
-  stage: build
-  dependencies:
-    - jar_gateway
-  script:
-    - docker info
-    - docker build -f gateway/Dockerfile -t sbg ./gateway
-    - docker run sbg
-  variables:
-    DOCKER_TLS_CERTDIR: ""
-  services:
-    - docker:18.09.7-dind
+      - /builds/finbyte/solaris-gateaway/resource-server/build/libs/
 
 build_docker_compose:
   image: tmaier/docker-compose:latest
@@ -34,5 +21,4 @@ build_docker_compose:
     - docker-compose --version
   stage: build
   script:
-    - ls
     - docker-compose up -d --build
