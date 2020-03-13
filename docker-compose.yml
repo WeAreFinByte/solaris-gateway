@@ -17,3 +17,7 @@ services:
     build: resource-server
     ports:
       - "8081:8081"
+  integration-tests:
+    build: integration-tests
+    ports:
+      - "9090:9090"
