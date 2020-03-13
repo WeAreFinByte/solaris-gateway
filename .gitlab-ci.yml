@@ -1,0 +1,24 @@
+stages:
+  - jar
+  - build
+
+jar_gateway:
+  image: openjdk:11
+  stage: jar
+  script:
+    - ./gradlew bootJar
+  artifacts:
+    paths:
+      - /builds/finbyte/solaris-gateaway/gateway/build/libs/
+      - /builds/finbyte/solaris-gateaway/resource-server/build/libs/
+
+build_docker_compose:
+  image: tmaier/docker-compose:latest
+  services:
+    - docker:18.09.7-dind
+  before_script:
+    - docker info
+    - docker-compose --version
+  stage: build
+  script:
+    - docker-compose up -d --build
