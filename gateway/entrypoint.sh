@@ -9,4 +9,5 @@ java "-Dspring.profiles.active=${SPRING_PROFILE_ENV}" \
             "-Dcom.finleap.solarisgateway.auth.${PROVIDER_ENV}.httpmethod=${HTTP_METHOD_ENV}" \
             "-Dcom.finleap.solarisgateway.auth.${PROVIDER_ENV}.granttype=${GRANT_TYPE_ENV}" \
             "-Dcom.finleap.solarisgateway.uri=${ROUTE_URI_ENV}" \
+            "-Dcom.finleap.solarisgateway.prefix=${PREFIX_ENV}" \
             -jar /app.jar
