@@ -17,14 +17,15 @@ wait-for-url() {
     sleep 5
 }
 
+endpoint="http://gateway:8090/uaa/uaa/header"
 wait-for-url
 
-response=$(curl --write-out %{http_code} --silent --output /dev/null http://gateway:8090/uaa/header)
+response=$(curl --write-out %{http_code} --silent --output /dev/null $endpoint)
 
 if [[ "$response" -ne 200 ]] ; then
   echo "Site status changed to $response"
   exit 1
 else
-  echo "OK STATUS $response"
+  echo "OK STATUS $response, successfully sent request to $endpoint"
   exit 0
 fi
