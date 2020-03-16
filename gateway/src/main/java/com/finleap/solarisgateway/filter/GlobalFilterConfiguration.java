@@ -20,7 +20,7 @@ public class GlobalFilterConfiguration {
   @Resource(name = "genericAuthTokenService")
   private AuthTokenService authTokenService;
 
-  @Order(1)
+  @Order(-1)
   @Bean
   public GlobalFilter globalFilter() {
 

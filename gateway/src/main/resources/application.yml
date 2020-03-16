@@ -3,6 +3,7 @@ com:
   finleap:
     solarisgateway:
       uri: "http://localhost:8081"
+      prefix : "/solaris/"
       retry:
         count: 2
       auth:
@@ -30,3 +31,14 @@ com:
 ##################################################################
 server:
   port: 8090
+# fix live load not started issue
+spring:
+  devtools:
+    livereload:
+      port: 35730
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,threaddump,metrics,gateway,info,heapdump
