@@ -3,6 +3,7 @@ package com.finleap.oauth.resource.config;
 import java.io.IOException;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,54 +23,58 @@ import org.springframework.web.client.RestTemplate;
 
 public class CustomRemoteTokenService implements ResourceServerTokenServices {
 
-    private RestOperations restTemplate;
+  private RestOperations restTemplate;
 
-    private AccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
+  @Value("${com.finleap.oauth.resource.url}")
+  private String url;
 
-    @Autowired
-    public CustomRemoteTokenService() {
-        restTemplate = new RestTemplate();
-        ((RestTemplate) restTemplate).setErrorHandler(new DefaultResponseErrorHandler() {
-            @Override
-            // Ignore 400
-            public void handleError(ClientHttpResponse response) throws IOException {
-                if (response.getRawStatusCode() != 400) {
-                    super.handleError(response);
-                }
-            }
-        });
-    }
+  private AccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
 
-    @Override
-    public OAuth2Authentication loadAuthentication(String accessToken) throws AuthenticationException, InvalidTokenException {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + accessToken);
-        Map<String, Object> map = executeGet("http://uaa:8080/introspect?token=" + accessToken+"&scopes=password.write%2Cscim.userids", headers);
-        if (map == null || map.isEmpty() || map.get("error") != null) {
-            throw new InvalidTokenException("Token not allowed");
+  @Autowired
+  public CustomRemoteTokenService() {
+    restTemplate = new RestTemplate();
+    ((RestTemplate) restTemplate).setErrorHandler(new DefaultResponseErrorHandler() {
+      @Override
+      // Ignore 400
+      public void handleError(ClientHttpResponse response) throws IOException {
+        if (response.getRawStatusCode() != 400) {
+          super.handleError(response);
         }
-        return tokenConverter.extractAuthentication(map);
-    }
+      }
+    });
 
-    @Override
-    public OAuth2AccessToken readAccessToken(String accessToken) {
-        throw new UnsupportedOperationException("Not supported: read access token");
-    }
+  }
 
-    private Map<String, Object> executeGet(String path, HttpHeaders headers) {
-        try {
-            if (headers.getContentType() == null) {
-                headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-            }
-            @SuppressWarnings("rawtypes")
-            Map map = restTemplate.exchange(path, HttpMethod.POST, new HttpEntity<MultiValueMap<String, String>>(null, headers), Map.class).getBody();
-            @SuppressWarnings("unchecked")
-            Map<String, Object> result = map;
-            return result;
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return null;
+  @Override
+  public OAuth2Authentication loadAuthentication(String accessToken) throws AuthenticationException, InvalidTokenException {
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Authorization", "Bearer " + accessToken);
+    Map<String, Object> map = executePost(url + "?token=" + accessToken + "&scopes=password.write%2Cscim.userids", headers);
+    if (map == null || map.isEmpty() || map.get("error") != null) {
+      throw new InvalidTokenException("Token not allowed");
     }
+    return tokenConverter.extractAuthentication(map);
+  }
+
+  @Override
+  public OAuth2AccessToken readAccessToken(String accessToken) {
+    throw new UnsupportedOperationException("Not supported: read access token");
+  }
+
+  private Map<String, Object> executePost(String path, HttpHeaders headers) {
+    try {
+      if (headers.getContentType() == null) {
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+      }
+      @SuppressWarnings("rawtypes")
+      Map map = restTemplate.exchange(path, HttpMethod.POST, new HttpEntity<MultiValueMap<String, String>>(null, headers), Map.class).getBody();
+      @SuppressWarnings("unchecked")
+      Map<String, Object> result = map;
+      return result;
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
+    }
+    return null;
+  }
 
 }

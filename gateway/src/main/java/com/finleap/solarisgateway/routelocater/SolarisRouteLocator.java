@@ -19,17 +19,21 @@ public class SolarisRouteLocator {
   private GatewayFilter solarisRetryGatewayFilter;
 
   private String uri;
+  private String prefix;
 
-  public SolarisRouteLocator(@Value("${" + SolarisGatewayConstant.RouteLocator.DEFAULT_URI_KEY + "}") String uri) {
+  public SolarisRouteLocator(@Value("${" + SolarisGatewayConstant.RouteLocator.DEFAULT_URI_KEY + "}") String uri,
+      @Value("${" + SolarisGatewayConstant.RouteLocator.DEFAULT_PREFIX_KEY + "}") String prefix) {
     this.uri = uri;
+    this.prefix = prefix;
   }
 
   @Bean
   public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
     return builder.routes()
-        .route(r -> r.host("**").filters(f -> f.filters(solarisRetryGatewayFilter))
-            .uri(uri)
-        )
+        .route(r -> r.path(prefix + "**") //
+            .filters(f -> f.rewritePath(prefix + "(?<remains>.*)", "/${remains}") //
+                .filter(solarisRetryGatewayFilter)) //
+            .uri(uri))
         .build();
   }
 }

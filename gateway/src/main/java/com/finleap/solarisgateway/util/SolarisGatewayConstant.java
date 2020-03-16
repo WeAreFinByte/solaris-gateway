@@ -11,6 +11,7 @@ public final class SolarisGatewayConstant {
   public interface RouteLocator {
 
     String DEFAULT_URI_KEY = "com.finleap.solarisgateway.uri";
+    String DEFAULT_PREFIX_KEY = "com.finleap.solarisgateway.prefix";
   }
 
   public interface Auth {
