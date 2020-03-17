@@ -47,11 +47,18 @@ public abstract class AbstractTokenClientService implements TokenClientService {
 
     this.webClient = getWebClient(webClientBuilder);
 
+    this.params = prepareParams();
+  }
+
+  protected MultiValueMap<String, String> prepareParams() {
+
     this.params = new LinkedMultiValueMap<>();
 
-    params.add("client_id",client_id);
-    params.add("client_secret",client_secret);
-    params.add("grant_type",grant_type);
+    params.add("client_id", client_id);
+    params.add("client_secret", client_secret);
+    params.add("grant_type", grant_type);
+
+    return params;
   }
 
   protected WebClient getWebClient(WebClient.Builder webClientBuilder) {

@@ -6,6 +6,7 @@ import com.finleap.solarisgateway.auth.client.TokenClientService;
 import com.finleap.solarisgateway.auth.client.dto.GenericToken;
 import com.finleap.solarisgateway.auth.client.dto.Token;
 import javax.annotation.Resource;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,27 +18,19 @@ public class RefreshTokenRunnable implements Runnable {
   @Resource(name = "tokenClientService")
   private TokenClientService tokenClientService;
 
+  @Setter
   @Value("${" + THRESHOLD_KEY + "}")
   private Long expireThreshold;
 
   private long expireTime;
 
-  @SuppressWarnings("InfiniteLoopStatement")
   @Override
   public void run() {
-    refreshToken();
 
-    while (true) {
-      long now = System.currentTimeMillis();
+    long now = System.currentTimeMillis();
 
-      if (now > expireTime) {
-        refreshToken();
-      }
-      try {
-        Thread.sleep(500);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
+    if (now > expireTime) {
+      refreshToken();
     }
   }
 

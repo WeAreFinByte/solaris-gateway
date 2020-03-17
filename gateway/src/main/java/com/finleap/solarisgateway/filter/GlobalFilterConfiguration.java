@@ -22,7 +22,7 @@ public class GlobalFilterConfiguration {
 
   @Order(-1)
   @Bean
-  public GlobalFilter globalFilter() {
+  public GlobalFilter globalAuthorizationHeaderFilter() {
 
     return (exchange, chain) -> {
 

@@ -19,14 +19,16 @@ public class RetryFilterConfiguration {
   @Value("${" + RETRY_COUNT + "}")
   private Integer retries;
 
+  protected static int FILTER_ORDER = -1;
+
   @Bean("solarisRetryGatewayFilter")
   public GatewayFilter solarisRetryGatewayFilter(RetryGatewayFilterFactory retryGatewayFilterFactory) {
     return new OrderedGatewayFilter(retryGatewayFilterFactory.apply(getRetryConfig())
-        , -1);
+        , FILTER_ORDER);
   }
 
   // Retry Configuration
-  private RetryGatewayFilterFactory.RetryConfig getRetryConfig() {
+  protected RetryGatewayFilterFactory.RetryConfig getRetryConfig() {
     final RetryGatewayFilterFactory.RetryConfig retryConfig = new RetryGatewayFilterFactory.RetryConfig();
     retryConfig.setMethods(HttpMethod.values()).setRetries(retries).setStatuses(HttpStatus.UNAUTHORIZED);
 

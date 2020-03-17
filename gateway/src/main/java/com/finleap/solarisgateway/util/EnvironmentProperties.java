@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EnvironmentConfiguration {
+public class EnvironmentProperties {
 
-  public EnvironmentConfiguration(@Value("${" + Auth.PROVIDER_KEY + "}") String oauthProviderValue) {
+  public EnvironmentProperties(@Value("${" + Auth.PROVIDER_KEY + "}") String oauthProviderValue) {
     this.oauthProviderValue = oauthProviderValue;
   }
 
