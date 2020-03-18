@@ -20,7 +20,7 @@ wait-for-url() {
 endpoint="http://gateway:8090/uaa/uaa/header"
 wait-for-url
 
-response=$(curl --write-out %{http_code} --silent --output /dev/null $endpoint)
+response=$(curl -H "Authorization: Basic c29sYXJpc1VzZXIxOnBhc3N3b3Jk" --write-out %{http_code} --silent --output /dev/null $endpoint)
 
 if [[ "$response" -ne 200 ]] ; then
   echo "Site status changed to $response"
