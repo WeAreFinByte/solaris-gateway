@@ -4,6 +4,8 @@ import com.finleap.solarisgateway.util.SolarisGatewayConstant.Auth;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+// TODO move to properties
+@Deprecated
 @Component
 public class EnvironmentProperties {
 

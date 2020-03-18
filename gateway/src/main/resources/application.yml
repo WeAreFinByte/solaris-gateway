@@ -26,6 +26,21 @@ com:
           expire:
             threshold: 10000
 
+      security:
+        users:
+          - name: solarisUser1
+            password: password
+            roles: SOLARIS
+            enabled: true
+          - name: manager1
+            password: password
+            roles: MANAGER
+            enabled: true
+          - name: oldSolarisUser
+            password: password
+            roles: SOLARIS
+            enabled: false
+
 ##################################################################
 # Other Properties
 ##################################################################
@@ -42,4 +57,5 @@ management:
     web:
       exposure:
         include: health,threaddump,metrics,gateway,info,heapdump,prometheus
+
 
