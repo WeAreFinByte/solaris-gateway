@@ -35,8 +35,8 @@ public abstract class AbstractTokenClientService implements TokenClientService {
 
   private final WebClient webClient;
 
-  public AbstractTokenClientService(String httpMethod, String baseUri, String uri, String client_id, String client_secret, String grant_type,
-      WebClient.Builder webClientBuilder) {
+  public AbstractTokenClientService(final String httpMethod, final String baseUri, final String uri, final String client_id, final String client_secret,
+      final String grant_type) {
 
     this.httpMethod = httpMethod;
     this.baseUri = baseUri;
@@ -45,17 +45,24 @@ public abstract class AbstractTokenClientService implements TokenClientService {
     this.client_secret = client_secret;
     this.grant_type = grant_type;
 
-    this.webClient = getWebClient(webClientBuilder);
+    this.webClient = getWebClient(baseUri);
+
+    this.params = prepareParams();
+  }
+
+  protected MultiValueMap<String, String> prepareParams() {
 
     this.params = new LinkedMultiValueMap<>();
 
-    params.add("client_id",client_id);
-    params.add("client_secret",client_secret);
-    params.add("grant_type",grant_type);
+    params.add("client_id", client_id);
+    params.add("client_secret", client_secret);
+    params.add("grant_type", grant_type);
+
+    return params;
   }
 
-  protected WebClient getWebClient(WebClient.Builder webClientBuilder) {
-    return webClientBuilder.baseUrl(baseUri).defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).build();
+  protected WebClient getWebClient(String baseUri) {
+    return WebClient.builder().baseUrl(baseUri).defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).build();
   }
 
   @Override

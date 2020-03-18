@@ -3,7 +3,7 @@ package com.finleap.solarisgateway.auth.impl;
 import com.finleap.solarisgateway.auth.client.TokenClientService;
 import com.finleap.solarisgateway.auth.client.impl.SolarisTokenClientService;
 import com.finleap.solarisgateway.auth.client.impl.UaaTokenClientService;
-import com.finleap.solarisgateway.util.EnvironmentConfiguration;
+import com.finleap.solarisgateway.util.EnvironmentProperties;
 import com.finleap.solarisgateway.util.OauthProvider;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class TokenClientFactory {
   private ApplicationContext applicationContext;
 
   @Autowired
-  private EnvironmentConfiguration configuration;
+  private EnvironmentProperties configuration;
 
   @Bean("tokenClientService")
   public TokenClientService getClient() {
@@ -27,16 +27,20 @@ public class TokenClientFactory {
 
     final OauthProvider oauthProvider = configuration.getOauthProvider();
 
-    switch (oauthProvider) {
-      case UAA:
-        tokenClientService = applicationContext.getBean(UaaTokenClientService.class);
-        break;
-      case SOLARIS:
-        tokenClientService = applicationContext.getBean(SolarisTokenClientService.class);
-        break;
+    if (oauthProvider != null) {
+      switch (oauthProvider) {
+        case UAA:
+          tokenClientService = applicationContext.getBean(UaaTokenClientService.class);
+          break;
+        case SOLARIS:
+          tokenClientService = applicationContext.getBean(SolarisTokenClientService.class);
+          break;
 
-      default:
-        throw new NoSuchBeanDefinitionException("Auth client properties is not provided.");
+        default:
+          throw new NoSuchBeanDefinitionException("Auth client properties is wrong.");
+      }
+    } else {
+      throw new NoSuchBeanDefinitionException("Auth client properties is not provided.");
     }
 
     return tokenClientService;

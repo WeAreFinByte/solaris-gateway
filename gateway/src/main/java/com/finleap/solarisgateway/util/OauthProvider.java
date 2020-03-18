@@ -1,6 +1,7 @@
 package com.finleap.solarisgateway.util;
 
 import com.finleap.solarisgateway.util.SolarisGatewayConstant.AuthProviderEnumValue;
+import lombok.Getter;
 
 /**
  * Available Oauth Provider List
@@ -10,6 +11,7 @@ public enum OauthProvider {
   SOLARIS(AuthProviderEnumValue.SOLARIS),//
   UAA(AuthProviderEnumValue.UAA);//
 
+  @Getter
   private final String providerKey;
 
   OauthProvider(String providerKey) {

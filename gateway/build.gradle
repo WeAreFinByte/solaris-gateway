@@ -17,7 +17,10 @@ configurations {
         extendsFrom annotationProcessor
     }
     all {
+        // spring default logging dependencies are removed from classpath to use log4j2 and slf4j
         exclude module: 'spring-boot-starter-logging'
+        exclude module: 'logback-classic'
+
     }
 }
 
@@ -30,16 +33,18 @@ ext {
 }
 
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter-webflux",
-            "org.springframework.cloud:spring-cloud-starter-gateway",
-            "org.springframework.boot:spring-boot-starter-log4j2",
-            "org.springframework.boot:spring-boot-starter-actuator"
+    compile 'org.springframework.boot:spring-boot-starter-webflux',
+            'org.springframework.cloud:spring-cloud-starter-gateway',
+            'org.springframework.boot:spring-boot-starter-log4j2',
+            'org.springframework.boot:spring-boot-starter-actuator'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+    testCompile 'org.springframework.boot:spring-boot-starter-test',
+            'com.carrotsearch:junit-benchmarks:0.7.2',
+            'com.squareup.okhttp3:okhttp:4.0.1',
+            'com.squareup.okhttp3:mockwebserver:4.0.1'
+
 }
 
 dependencyManagement {

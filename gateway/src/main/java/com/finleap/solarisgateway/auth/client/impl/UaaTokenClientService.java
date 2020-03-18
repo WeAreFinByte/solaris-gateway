@@ -18,9 +18,8 @@ public class UaaTokenClientService extends AbstractTokenClientService {
       @Value("${" + URI_KEY + "}") String uri,//
       @Value("${" + CLIENT_ID_KEY + "}") String client_id,//
       @Value("${" + CLIENT_SECRET_KEY + "}") String client_secret,//
-      @Value("${" + GRANT_TYPE_KEY + "}") String grant_type,//
-      Builder webClientBuilder) {
+      @Value("${" + GRANT_TYPE_KEY + "}") String grant_type) {
 
-    super(httpMethod, baseUri, uri, client_id, client_secret, grant_type, webClientBuilder);
+    super(httpMethod, baseUri, uri, client_id, client_secret, grant_type);
   }
 }
