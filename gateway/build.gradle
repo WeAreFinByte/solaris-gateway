@@ -40,7 +40,10 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.springframework.boot:spring-boot-starter-test',
+            'com.carrotsearch:junit-benchmarks:0.7.2',
+            'com.squareup.okhttp3:okhttp:4.0.1',
+            'com.squareup.okhttp3:mockwebserver:4.0.1'
 
 }
 
