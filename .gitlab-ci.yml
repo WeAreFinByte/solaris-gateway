@@ -21,7 +21,6 @@ build_docker_compose:
     - docker-compose --version
   stage: test
   script:
-    - docker-compose -f integration-tests/docker-compose.yml build --no-cache
-    - docker-compose -f integration-tests/docker-compose.yml up --abort-on-container-exit
+    - make test_integration
   after_script:
     - docker-compose -f integration-tests/docker-compose.yml logs >& logs.txt

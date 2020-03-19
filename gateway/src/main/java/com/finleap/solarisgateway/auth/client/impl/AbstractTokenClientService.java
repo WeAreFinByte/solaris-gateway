@@ -31,9 +31,9 @@ public abstract class AbstractTokenClientService implements TokenClientService {
   @Getter
   private String grant_type;
 
-  private MultiValueMap<String, String> params;
+  protected MultiValueMap<String, String> params;
 
-  private final WebClient webClient;
+  protected final WebClient webClient;
 
   public AbstractTokenClientService(final String httpMethod, final String baseUri, final String uri, final String client_id, final String client_secret,
       final String grant_type) {

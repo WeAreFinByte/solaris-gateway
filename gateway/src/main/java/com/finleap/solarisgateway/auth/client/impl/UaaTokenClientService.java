@@ -1,13 +1,17 @@
 package com.finleap.solarisgateway.auth.client.impl;
 
-import static com.finleap.solarisgateway.util.SolarisGatewayConstant.UAA.*;
+import static com.finleap.solarisgateway.util.SolarisGatewayConstant.UAA.BASE_URI_KEY;
+import static com.finleap.solarisgateway.util.SolarisGatewayConstant.UAA.CLIENT_ID_KEY;
+import static com.finleap.solarisgateway.util.SolarisGatewayConstant.UAA.CLIENT_SECRET_KEY;
+import static com.finleap.solarisgateway.util.SolarisGatewayConstant.UAA.GRANT_TYPE_KEY;
+import static com.finleap.solarisgateway.util.SolarisGatewayConstant.UAA.HTTP_METHOD_KEY;
+import static com.finleap.solarisgateway.util.SolarisGatewayConstant.UAA.URI_KEY;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient.Builder;
 
 /**
- * Ticket Client implementation for UAA
+ * Ticket Client implementation for UAA Oauth Token Retrieval
  *
  * UAA and resource-server is mock project to test and development purpose. You should not use for production
  */
