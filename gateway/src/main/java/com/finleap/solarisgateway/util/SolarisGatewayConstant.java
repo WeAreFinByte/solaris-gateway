@@ -5,6 +5,8 @@ package com.finleap.solarisgateway.util;
  */
 public final class SolarisGatewayConstant {
 
+  public final static String PROPERTIES_ROOT_PACKAGE = "com.finleap.solarisgateway.util.properties";
+
   private SolarisGatewayConstant() {
   }
 
@@ -52,6 +54,4 @@ public final class SolarisGatewayConstant {
     String SOLARIS = "solaris";
     String UAA = "uaa";
   }
-
-
 }
