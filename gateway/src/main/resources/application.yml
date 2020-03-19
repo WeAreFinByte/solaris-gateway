@@ -8,24 +8,21 @@ com:
         count: 2
       auth:
         provider: solaris
+        clientid: login-client
+        clientsecret: secret
         uaa:
           httpmethod: POST
           baseuri: "http://localhost:8080"
           uri: /oauth/token
-          clientid: login-client
-          clientsecret: secret
           granttype: client_credentials
         solaris:
           httpmethod: POST
           baseuri: "http://localhost:8080"
           uri: /oauth/token
-          clientid: login-client
-          clientsecret: secret
           granttype: client_credentials
         token:
           expire:
             threshold: 10000
-
       security:
         users:
           - name: solarisUser1
@@ -40,7 +37,10 @@ com:
             password: password
             roles: SOLARIS
             enabled: false
-
+      docker-secret:
+        bind-path: "/run/secrets"
+        client-id: client-id
+        client-secret: client-secret
 ##################################################################
 # Other Properties
 ##################################################################
@@ -56,6 +56,11 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,threaddump,metrics,gateway,info,heapdump,prometheus
+        include: health,threaddump,metrics,gateway,info,heapdump,prometheus,env
+
+# rid of spring security in-memory configuration info logs
+logging:
+  level:
+    org.springframework.context.support.[PostProcessorRegistrationDelegate$BeanPostProcessorChecker]: WARN
 
 

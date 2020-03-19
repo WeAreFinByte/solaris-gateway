@@ -1,8 +1,8 @@
 package com.finleap.solarisgateway.auth.client.impl;
 
+import static com.finleap.solarisgateway.util.SolarisGatewayConstant.Auth.CLIENT_ID_KEY;
+import static com.finleap.solarisgateway.util.SolarisGatewayConstant.Auth.CLIENT_SECRET_KEY;
 import static com.finleap.solarisgateway.util.SolarisGatewayConstant.UAA.BASE_URI_KEY;
-import static com.finleap.solarisgateway.util.SolarisGatewayConstant.UAA.CLIENT_ID_KEY;
-import static com.finleap.solarisgateway.util.SolarisGatewayConstant.UAA.CLIENT_SECRET_KEY;
 import static com.finleap.solarisgateway.util.SolarisGatewayConstant.UAA.GRANT_TYPE_KEY;
 import static com.finleap.solarisgateway.util.SolarisGatewayConstant.UAA.HTTP_METHOD_KEY;
 import static com.finleap.solarisgateway.util.SolarisGatewayConstant.UAA.URI_KEY;

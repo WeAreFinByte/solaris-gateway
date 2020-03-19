@@ -13,9 +13,9 @@ import org.springframework.validation.annotation.Validated;
 
 @Getter
 @Validated
-@ConfigurationProperties(prefix = "com.finleap.solarisgateway.security")
 @ConstructorBinding
 @AllArgsConstructor
+@ConfigurationProperties(prefix = "com.finleap.solarisgateway.security")
 public class SolarisSecurityProperties {
 
   @NotNull
