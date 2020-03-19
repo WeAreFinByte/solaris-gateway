@@ -1,4 +1,4 @@
-uaa:
+run_uaa:
 	docker pull cfidentity/uaa:latest \
 	&& docker run \
 		--detach \
@@ -9,8 +9,12 @@ uaa:
 		--name uaatest \
 		cfidentity/uaa:latest
 
-build:
+build_gateway:
 	docker build -t sbg .
 
-run:
+run_gateway:
 	docker run sbg
+
+test_integration:
+	docker-compose -f integration-tests/docker-compose.yml build --no-cache && \
+	docker-compose -f integration-tests/docker-compose.yml up --abort-on-container-exit
