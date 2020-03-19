@@ -1,6 +1,6 @@
 # General properties and default values for environment properties
 com:
-  finleap:
+  finbyte:
     solarisgateway:
       uri: "http://localhost:8081"
       prefix : "/solaris/"
@@ -25,17 +25,17 @@ com:
             threshold: 10000
       security:
         users:
-          - name: solarisUser1
+          - name: paymentUser1
             password: password
-            roles: SOLARIS
+            roles: GATEWAY_USER
             enabled: true
-          - name: manager1
+          - name: admin
             password: password
-            roles: MANAGER
+            roles: ADMIN
             enabled: true
-          - name: oldSolarisUser
+          - name: oldUser
             password: password
-            roles: SOLARIS
+            roles: GATEWAY_USER
             enabled: false
       docker-secret:
         bind-path: "/run/secrets"
@@ -62,5 +62,3 @@ management:
 logging:
   level:
     org.springframework.context.support.[PostProcessorRegistrationDelegate$BeanPostProcessorChecker]: WARN
-
-

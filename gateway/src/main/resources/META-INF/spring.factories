@@ -1,4 +1,4 @@
 # Auto Configure
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.finleap.solarisgateway.secret.DockerSecretsClientSecretProcessor,\
-  com.finleap.solarisgateway.secret.DockerSecretsClientIdProcessor
+  com.finbyte.solarisgateway.secret.DockerSecretsClientSecretProcessor,\
+  com.finbyte.solarisgateway.secret.DockerSecretsClientIdProcessor
