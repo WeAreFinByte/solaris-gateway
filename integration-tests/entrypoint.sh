@@ -17,15 +17,20 @@ wait-for-url() {
     sleep 5
 }
 
-endpoint="http://gateway:8090/uaa/uaa/header"
+urls=( http://gateway:8090/solaris/header http://gateway:8090/solaris/env/v1/persons http://gateway:8090/solaris/env/v1/accounts )
 wait-for-url
 
-response=$(curl -H "Authorization: Basic c29sYXJpc1VzZXIxOnBhc3N3b3Jk" --write-out %{http_code} --silent --output /dev/null $endpoint)
+for i in "${urls[@]}"
+do
+   :
+   response=$(curl -H "Authorization: Basic c29sYXJpc1VzZXIxOnBhc3N3b3Jk" --write-out %{http_code} --silent --output /dev/null $i)
 
-if [[ "$response" -ne 200 ]] ; then
-  echo "Site status changed to $response"
-  exit 1
-else
-  echo "OK STATUS $response, successfully sent request to $endpoint"
-  exit 0
-fi
+  if [[ "$response" -ne 200 ]] ; then
+    echo "Site status changed to $response, for equest to $i"
+    exit 1
+  else
+    echo "OK STATUS $response, successfully sent request to $i"
+  fi
+done
+exit 0
+

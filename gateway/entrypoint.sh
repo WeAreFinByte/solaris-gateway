@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "-Dcom.finleap.solarisgateway.auth.${PROVIDER_ENV}.baseuri=${BASE_URI_ENV}"
 java "-Dspring.profiles.active=${SPRING_PROFILE_ENV}" \
             "-Dserver.port=${PORT_ENV}" \
             "-Dcom.finleap.solarisgateway.auth.${PROVIDER_ENV}.baseuri=${BASE_URI_ENV}" \

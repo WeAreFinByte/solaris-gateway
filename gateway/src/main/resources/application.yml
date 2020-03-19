@@ -7,7 +7,7 @@ com:
       retry:
         count: 2
       auth:
-        provider: uaa
+        provider: solaris
         uaa:
           httpmethod: POST
           baseuri: "http://localhost:8080"

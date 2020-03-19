@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController()
-@RequestMapping("uaa")
 @PreAuthorize("#oauth2.hasAnyScope('uaa.resource')")
 public class TestController {
 
