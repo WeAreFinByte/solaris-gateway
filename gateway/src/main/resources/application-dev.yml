@@ -8,3 +8,11 @@
 ##################################################################
 server:
   port: 8090
+
+logging:
+  level:
+    org.springframework.context.support.[PostProcessorRegistrationDelegate$BeanPostProcessorChecker]: WARN
+    org.springframework.web.reactive: DEBUG
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.cloud.gateway.handler.FilteringWebHandler: INFO
+    #reactor.netty: DEBUG

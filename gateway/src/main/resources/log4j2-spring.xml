@@ -20,14 +20,9 @@
         <Logger name="org.springframework.boot" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="com.finbyte.solarisgateway.routelocater" level="debug" additivity="false">
+        <Logger name="com.finbyte.solarisgateway" level="debug" additivity="false">
             <AppenderRef ref="toAppFileAppender"/>
-        </Logger>
-        <Logger name="com.finbyte.solarisgateway.filter" level="debug" additivity="false">
-            <AppenderRef ref="toAppFileAppender"/>
-        </Logger>
-        <Logger name="com.finbyte.solarisgateway.auth" level="debug" additivity="false">
-            <AppenderRef ref="toAppFileAppender"/>
+            <AppenderRef ref="Console"/>
         </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>

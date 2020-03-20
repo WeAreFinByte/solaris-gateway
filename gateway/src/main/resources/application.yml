@@ -58,7 +58,12 @@ management:
       exposure:
         include: health,threaddump,metrics,gateway,info,heapdump,prometheus,env
 
-# rid of spring security in-memory configuration info logs
 logging:
   level:
     org.springframework.context.support.[PostProcessorRegistrationDelegate$BeanPostProcessorChecker]: WARN
+    org.springframework.cloud.gateway: WARN
+    org.springframework.boot.autoconfigure.web: WARN
+    reactor.netty: WARN
+    org.springframework.web.reactive: WARN
+    org.springframework.http.server.reactive: WARN
+

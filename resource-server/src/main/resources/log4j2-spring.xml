@@ -23,7 +23,7 @@
         <Logger name="com.finbyte.oauth.resource" level="debug" additivity="false">
             <AppenderRef ref="toAppFileAppender"/>
         </Logger>
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="toConsoleFileAppender"/>
         </Root>

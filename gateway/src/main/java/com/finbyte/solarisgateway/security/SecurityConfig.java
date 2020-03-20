@@ -1,7 +1,7 @@
 package com.finbyte.solarisgateway.security;
 
-import com.finbyte.solarisgateway.util.properties.SolarisSecurityProperties;
 import com.finbyte.solarisgateway.security.dto.Role;
+import com.finbyte.solarisgateway.util.properties.SolarisSecurityProperties;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.context.WebSessionServerSecurityContextRepository;
 
 
 @EnableWebFluxSecurity
@@ -23,11 +24,11 @@ public class SecurityConfig {
 
   @Bean
   public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {
-    return http
+    return http.securityContextRepository(new WebSessionServerSecurityContextRepository())
         .csrf().disable()
         .authorizeExchange()
         .pathMatchers("/actuator/**").hasRole(Role.ADMIN.toString())
-        .pathMatchers("/").permitAll()
+        .pathMatchers("/**").hasRole(Role.GATEWAY_USER.toString())
         .anyExchange().authenticated()
         .and()
         .httpBasic()
