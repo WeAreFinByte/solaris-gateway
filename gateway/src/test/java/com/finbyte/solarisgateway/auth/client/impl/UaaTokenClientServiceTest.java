@@ -23,7 +23,7 @@ public class UaaTokenClientServiceTest {
 
   private ObjectMapper MAPPER = new ObjectMapper();
 
-  private UaaTokenClientService uaaTokenClientService;
+  private GeneralTokenClientService uaaTokenClientService;
 
   private String baseUri;
 
@@ -53,7 +53,7 @@ public class UaaTokenClientServiceTest {
     baseUri = String.format("http://localhost:%s",
         mockBackEnd.getPort());
 
-    uaaTokenClientService = new UaaTokenClientService(httpMethod, baseUri, uri, clientId, clientSecret, grantType);
+    uaaTokenClientService = new GeneralTokenClientService(httpMethod, baseUri, uri, clientId, clientSecret, grantType);
   }
 
   @Test
@@ -93,7 +93,7 @@ public class UaaTokenClientServiceTest {
   public void getTokenShouldReturnTokenWhenHttpMethodPost() throws Exception {
 
     // Given
-    uaaTokenClientService = new UaaTokenClientService(HttpMethod.POST.toString(), baseUri, uri, clientId, clientSecret, grantType);
+    uaaTokenClientService = new GeneralTokenClientService(HttpMethod.POST.toString(), baseUri, uri, clientId, clientSecret, grantType);
 
     final GenericToken token = new GenericToken("theAccessToken", "bearer", 1000L, "theScope", "theJTI");
 

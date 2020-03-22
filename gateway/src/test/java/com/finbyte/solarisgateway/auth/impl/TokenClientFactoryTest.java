@@ -9,7 +9,7 @@ import static org.mockito.Mockito.verify;
 import com.finbyte.solarisgateway.util.EnvironmentProperties;
 import com.finbyte.solarisgateway.auth.client.TokenClientService;
 import com.finbyte.solarisgateway.auth.client.impl.SolarisTokenClientService;
-import com.finbyte.solarisgateway.auth.client.impl.UaaTokenClientService;
+import com.finbyte.solarisgateway.auth.client.impl.GeneralTokenClientService;
 import com.finbyte.solarisgateway.util.OauthProvider;
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,8 +45,8 @@ public class TokenClientFactoryTest {
 
     doReturn(OauthProvider.UAA).when(configuration).getOauthProvider();
 
-    final UaaTokenClientService uaaTokenClientService = mock(UaaTokenClientService.class);
-    doReturn(uaaTokenClientService).when(applicationContext).getBean(UaaTokenClientService.class);
+    final GeneralTokenClientService uaaTokenClientService = mock(GeneralTokenClientService.class);
+    doReturn(uaaTokenClientService).when(applicationContext).getBean(GeneralTokenClientService.class);
 
     //When
 
@@ -54,10 +54,10 @@ public class TokenClientFactoryTest {
 
     //Then
     Assert.assertNotNull(client);
-    Assert.assertTrue(client instanceof UaaTokenClientService);
+    Assert.assertTrue(client instanceof GeneralTokenClientService);
     Assert.assertEquals(uaaTokenClientService, client);
 
-    verify(applicationContext, times(1)).getBean(UaaTokenClientService.class);
+    verify(applicationContext, times(1)).getBean(GeneralTokenClientService.class);
 
   }
 

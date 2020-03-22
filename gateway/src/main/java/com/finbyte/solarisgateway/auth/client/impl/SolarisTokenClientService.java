@@ -1,11 +1,6 @@
 package com.finbyte.solarisgateway.auth.client.impl;
 
-import static com.finbyte.solarisgateway.util.SolarisGatewayConstant.Solaris.BASE_URI_KEY;
-import static com.finbyte.solarisgateway.util.SolarisGatewayConstant.Auth.CLIENT_ID_KEY;
-import static com.finbyte.solarisgateway.util.SolarisGatewayConstant.Auth.CLIENT_SECRET_KEY;
-import static com.finbyte.solarisgateway.util.SolarisGatewayConstant.Solaris.GRANT_TYPE_KEY;
-import static com.finbyte.solarisgateway.util.SolarisGatewayConstant.Solaris.HTTP_METHOD_KEY;
-import static com.finbyte.solarisgateway.util.SolarisGatewayConstant.Solaris.URI_KEY;
+import static com.finbyte.solarisgateway.util.SolarisGatewayConstant.Auth.*;
 
 import com.finbyte.solarisgateway.auth.client.dto.GenericToken;
 import com.finbyte.solarisgateway.auth.client.dto.Token;
