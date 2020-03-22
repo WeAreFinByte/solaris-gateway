@@ -33,7 +33,7 @@ public class GlobalFilterConfigurationTest {
     //Given
 
     //When
-    final GlobalFilter globalFilter = globalFilterConfiguration.globalAuthorizationHeaderFilter();
+    final GlobalFilter globalFilter = globalFilterConfiguration.globalAuthorizationHeaderFilter(authTokenService);
 
     //Then
     Assert.assertNotNull(globalFilter);
@@ -64,7 +64,7 @@ public class GlobalFilterConfigurationTest {
     doReturn(exchange).when(exhangeBuilder).build();
 
     //When
-    final GlobalFilter globalFilter = globalFilterConfiguration.globalAuthorizationHeaderFilter();
+    final GlobalFilter globalFilter = globalFilterConfiguration.globalAuthorizationHeaderFilter(authTokenService);
 
     globalFilter.filter(exchange, chain);
 

@@ -16,6 +16,13 @@ public final class SolarisGatewayConstant {
     String DEFAULT_PREFIX_KEY = "com.finbyte.solarisgateway.prefix";
   }
 
+  public interface EnvironmentProfileName {
+
+    String DEV = "dev";
+    String PROD = "prod";
+    String NOT_PROD = "!" + PROD;
+  }
+
   public interface Auth {
 
     String JWT_PREFIX = "Bearer ";
