@@ -17,7 +17,9 @@ configurations {
         extendsFrom annotationProcessor
     }
     all {
-        // spring default logging dependencies are removed from classpath to use log4j2 and slf4j
+        // spring default logging dependencies are removed fro
+        // compile('javax.activation:activation:1.1')
+        //compile('org.glassfish.jaxb:jaxb-runtime:2.3.0')m classpath to use log4j2 and slf4j
         exclude module: 'spring-boot-starter-logging'
         exclude module: 'logback-classic'
     }

@@ -7,19 +7,13 @@ com:
       retry:
         count: 2
       auth:
-        provider: solaris
+        provider: mock
         clientid: login-client
         clientsecret: secret
-        uaa:
-          httpmethod: POST
-          baseuri: "http://localhost:8080"
-          uri: /oauth/token
-          granttype: client_credentials
-        solaris:
-          httpmethod: POST
-          baseuri: "http://localhost:8080"
-          uri: /oauth/token
-          granttype: client_credentials
+        httpmethod: POST
+        baseuri: "http://localhost:8081"
+        uri: /oauth/token
+        granttype: client_credentials
         token:
           expire:
             threshold: 10000

@@ -46,7 +46,7 @@ public class GlobalFilterConfiguration {
 
   // Global filter to log user and redirection
   @Order()
-  @Profile({EnvironmentProfileName.DEV, EnvironmentProfileName.NOT_PROD})
+  @Profile(EnvironmentProfileName.DEV)
   @Bean
   public GlobalFilter globalLoggingFilter() {
     final PrincipalNameKeyResolver principalNameKeyResolver = new PrincipalNameKeyResolver();

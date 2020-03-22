@@ -2,7 +2,6 @@ package com.finbyte.solarisgateway.auth.impl;
 
 import com.finbyte.solarisgateway.auth.client.TokenClientService;
 import com.finbyte.solarisgateway.auth.client.impl.SolarisTokenClientService;
-import com.finbyte.solarisgateway.auth.client.impl.UaaTokenClientService;
 import com.finbyte.solarisgateway.util.EnvironmentProperties;
 import com.finbyte.solarisgateway.util.OauthProvider;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -29,8 +28,8 @@ public class TokenClientFactory {
 
     if (oauthProvider != null) {
       switch (oauthProvider) {
-        case UAA:
-          tokenClientService = applicationContext.getBean(UaaTokenClientService.class);
+        case MOCK:
+          tokenClientService = applicationContext.getBean(SolarisTokenClientService.class);
           break;
         case SOLARIS:
           tokenClientService = applicationContext.getBean(SolarisTokenClientService.class);

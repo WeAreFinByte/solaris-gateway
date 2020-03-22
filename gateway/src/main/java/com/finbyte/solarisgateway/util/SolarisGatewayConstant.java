@@ -30,23 +30,10 @@ public final class SolarisGatewayConstant {
     String PROVIDER_KEY = "com.finbyte.solarisgateway.auth.provider";
     String CLIENT_ID_KEY = "com.finbyte.solarisgateway.auth.clientid";
     String CLIENT_SECRET_KEY = "com.finbyte.solarisgateway.auth.clientsecret";
-  }
-
-  public interface UAA {
-
-    String HTTP_METHOD_KEY = "com.finbyte.solarisgateway.auth.uaa.httpmethod";
-    String BASE_URI_KEY = "com.finbyte.solarisgateway.auth.uaa.baseuri";
-    String URI_KEY = "com.finbyte.solarisgateway.auth.uaa.uri";
-    String GRANT_TYPE_KEY = "com.finbyte.solarisgateway.auth.uaa.granttype";
-  }
-
-  public interface Solaris {
-
-    String HTTP_METHOD_KEY = "com.finbyte.solarisgateway.auth.solaris.httpmethod";
-    String BASE_URI_KEY = "com.finbyte.solarisgateway.auth.solaris.baseuri";
-    String URI_KEY = "com.finbyte.solarisgateway.auth.solaris.uri";
-    String GRANT_TYPE_KEY = "com.finbyte.solarisgateway.auth.solaris.granttype";
-
+    String HTTP_METHOD_KEY = "com.finbyte.solarisgateway.auth.httpmethod";
+    String BASE_URI_KEY = "com.finbyte.solarisgateway.auth.baseuri";
+    String URI_KEY = "com.finbyte.solarisgateway.auth.uri";
+    String GRANT_TYPE_KEY = "com.finbyte.solarisgateway.auth.granttype";
   }
 
   public interface SecretKey {
@@ -65,6 +52,6 @@ public final class SolarisGatewayConstant {
   public interface AuthProviderEnumValue {
 
     String SOLARIS = "solaris";
-    String UAA = "uaa";
+    String MOCK = "mock";
   }
 }

@@ -9,7 +9,9 @@ import lombok.Getter;
 public enum OauthProvider {
 
   SOLARIS(AuthProviderEnumValue.SOLARIS),//
-  UAA(AuthProviderEnumValue.UAA);//
+  MOCK(AuthProviderEnumValue.MOCK);//
+
+
 
   @Getter
   private final String providerKey;
@@ -22,11 +24,11 @@ public enum OauthProvider {
 
     OauthProvider oauthProvider = null;
     switch (providerKey) {
-      case AuthProviderEnumValue.UAA:
-        oauthProvider = UAA;
-        break;
       case AuthProviderEnumValue.SOLARIS:
         oauthProvider = SOLARIS;
+        break;
+      case AuthProviderEnumValue.MOCK:
+        oauthProvider = MOCK;
         break;
     }
 
