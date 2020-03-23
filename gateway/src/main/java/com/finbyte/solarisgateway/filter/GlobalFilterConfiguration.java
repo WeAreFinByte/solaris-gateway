@@ -1,25 +1,27 @@
 package com.finbyte.solarisgateway.filter;
 
+import static com.finbyte.solarisgateway.util.SolarisGatewayConstant.ELAPSED_TIME_BEGIN;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_ORIGINAL_REQUEST_URL_ATTR;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR;
 
 import com.finbyte.solarisgateway.auth.AuthTokenService;
-import com.finbyte.solarisgateway.util.SolarisGatewayConstant.EnvironmentProfileName;
+import com.finbyte.solarisgateway.util.SolarisGatewayConstant.GatewayLogging;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.ratelimit.PrincipalNameKeyResolver;
 import org.springframework.cloud.gateway.route.Route;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 /**
  * Global pre-request filter
@@ -27,7 +29,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class GlobalFilterConfiguration {
-
 
   //Global pre-request filter to add Authorization key and value to header
   @Order(-2)
@@ -46,9 +47,11 @@ public class GlobalFilterConfiguration {
 
   // Global filter to log user and redirection
   @Order()
-  @Profile(EnvironmentProfileName.DEV)
   @Bean
-  public GlobalFilter globalLoggingFilter() {
+  @ConditionalOnProperty(
+      value = GatewayLogging.ENABLED_GLOBAL_LOGGING_FILTER_KEY,
+      havingValue = "true")
+  public GlobalFilter globalUserLoggingFilter() {
     final PrincipalNameKeyResolver principalNameKeyResolver = new PrincipalNameKeyResolver();
 
     return (exchange, chain) -> principalNameKeyResolver.resolve(exchange)
@@ -62,7 +65,7 @@ public class GlobalFilterConfiguration {
             final URI routeUri = exchange.getAttribute(GATEWAY_REQUEST_URL_ATTR);
             final ServerHttpRequest request = exchange.getRequest();
 
-            log.debug(" Incoming request {} {} by user: {} is routed to uri: {} path: {} routeLocator id: {}",
+            log.debug(" Incoming request {} {} by module: {} is routed to uri: {} path: {} routeLocator id: {}",
                 request.getMethodValue(),
                 originalUri,
                 name,
@@ -73,5 +76,29 @@ public class GlobalFilterConfiguration {
           }
           return chain.filter(exchange);
         });
+  }
+
+  @Order()
+  @Bean
+  @ConditionalOnProperty(
+      value = GatewayLogging.ENABLED_ELAPSED_TIME_LOGGING_FILTER_KEY,
+      havingValue = "true")
+  public GlobalFilter globalFilterElapsedGatewayFilter() {
+
+    return (exchange, chain) -> {
+      if (log.isDebugEnabled()) {
+        exchange.getAttributes().put(ELAPSED_TIME_BEGIN, System.nanoTime());
+      }
+      return chain.filter(exchange).then(
+          Mono.fromRunnable(() -> {
+            if (log.isDebugEnabled()) {
+              final Long startTime = exchange.getAttribute(ELAPSED_TIME_BEGIN);
+              if (startTime != null) {
+                log.debug("Resource server {} response time {} nanoseconds ", exchange.getRequest().getPath(), System.nanoTime() - startTime);
+              }
+            }
+          })
+      );
+    };
   }
 }

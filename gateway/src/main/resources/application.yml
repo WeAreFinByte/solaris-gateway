@@ -35,6 +35,9 @@ com:
         bind-path: "/run/secrets"
         client-id: client-id
         client-secret: client-secret
+      logging:
+        global: false
+        elapsedtime: false
 ##################################################################
 # Other Properties
 ##################################################################
@@ -57,7 +60,6 @@ logging:
     org.springframework.context.support.[PostProcessorRegistrationDelegate$BeanPostProcessorChecker]: WARN
     org.springframework.cloud.gateway: WARN
     org.springframework.boot.autoconfigure.web: WARN
-    reactor.netty: WARN
+    reactor.netty.http: WARN
     org.springframework.web.reactive: WARN
     org.springframework.http.server.reactive: WARN
-
