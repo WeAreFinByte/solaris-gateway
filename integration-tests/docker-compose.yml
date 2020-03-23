@@ -9,17 +9,8 @@ services:
         PREFIX: /solaris/
     ports:
       - "8090:8090"
-  uaa:
-    image: "cfidentity/uaa:latest"
-    ports:
-      - "8080:8080"
-    environment:
-      - CLOUDFOUNDRY_CONFIG_PATH=
-      - spring_profiles=default,hsqldb
-    volumes:
-      - ${PWD}/uaa/uaa.yml:/uaa.yml
-  resource-server:
-    build: ../resource-server
+  solaris-mock-server:
+    build: ../solaris-mock-server
     ports:
       - "8081:8081"
   test-runner:

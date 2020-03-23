@@ -6,10 +6,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.finbyte.solarisgateway.util.EnvironmentProperties;
 import com.finbyte.solarisgateway.auth.client.TokenClientService;
 import com.finbyte.solarisgateway.auth.client.impl.SolarisTokenClientService;
-import com.finbyte.solarisgateway.auth.client.impl.GeneralTokenClientService;
+import com.finbyte.solarisgateway.util.EnvironmentProperties;
 import com.finbyte.solarisgateway.util.OauthProvider;
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,28 +36,6 @@ public class TokenClientFactoryTest {
   @Before
   public void init() {
     MockitoAnnotations.initMocks(this);
-  }
-
-  @Test
-  public void getClientShouldReturnUAAtokenClientWhenOauthProviderUAA() {
-    //Given
-
-    doReturn(OauthProvider.UAA).when(configuration).getOauthProvider();
-
-    final GeneralTokenClientService uaaTokenClientService = mock(GeneralTokenClientService.class);
-    doReturn(uaaTokenClientService).when(applicationContext).getBean(GeneralTokenClientService.class);
-
-    //When
-
-    final TokenClientService client = tokenClientFactory.getClient();
-
-    //Then
-    Assert.assertNotNull(client);
-    Assert.assertTrue(client instanceof GeneralTokenClientService);
-    Assert.assertEquals(uaaTokenClientService, client);
-
-    verify(applicationContext, times(1)).getBean(GeneralTokenClientService.class);
-
   }
 
   @Test

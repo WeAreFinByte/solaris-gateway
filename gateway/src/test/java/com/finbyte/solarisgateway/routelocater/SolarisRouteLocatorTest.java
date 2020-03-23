@@ -15,7 +15,7 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.test.context.TestPropertySource;
 
-@TestPropertySource(properties = {DEFAULT_URI_KEY + "=http://resource-server", DEFAULT_PREFIX_KEY + "=/testprefix/"})
+@TestPropertySource(properties = {DEFAULT_URI_KEY + "=http://solaris-mock-server", DEFAULT_PREFIX_KEY + "=/testprefix/"})
 @SpringBootTest
 public class SolarisRouteLocatorTest {
 
@@ -40,7 +40,7 @@ public class SolarisRouteLocatorTest {
     final RouteLocator routeLocator = solarisRouteLocator.customRouteLocator(builder);
 
     //Then
-    Assert.assertEquals("http://resource-server",solarisRouteLocator.getUri());
+    Assert.assertEquals("http://solaris-mock-server",solarisRouteLocator.getUri());
     Assert.assertEquals("/testprefix/",solarisRouteLocator.getPrefix());
 
     Assert.assertNotNull(routeLocator);
