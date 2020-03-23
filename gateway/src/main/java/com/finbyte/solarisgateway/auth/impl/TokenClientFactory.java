@@ -29,8 +29,6 @@ public class TokenClientFactory {
     if (oauthProvider != null) {
       switch (oauthProvider) {
         case MOCK:
-          tokenClientService = applicationContext.getBean(SolarisTokenClientService.class);
-          break;
         case SOLARIS:
           tokenClientService = applicationContext.getBean(SolarisTokenClientService.class);
           break;

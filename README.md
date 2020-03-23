@@ -24,15 +24,9 @@ For solaris-gateway to work we need following:
 
 For testing purposes we use the following:
 
-* [CloudFoundry UAA](https://github.com/cloudfoundry/uaa) as our oauth provider
+* A custom [solaris-mock-server](solaris-mock-server) as our service endpoint
 
-The UAA could be run with following command in the root directory of the project:
-
-`docker run --detach --publish 8080:8080 --mount type=bind,source=${PWD}/uaa/uaa.yml,target=/uaa.yml --env CLOUDFOUNDRY_CONFIG_PATH= --env spring_profiles=default,hsqldb cfidentity/uaa:latest`
-
-* A custom [resource-server](resource-server) as our service endpoint
-
-Simply run the resource-server using your IDE or using the following command, active profie should be set to `dev`:
+Simply run the solaris-mock-server using your IDE or using the following command, active profie should be set to `dev`:
 
 `./gradlew bootJar`
 
@@ -40,7 +34,9 @@ Simply run the resource-server using your IDE or using the following command, ac
 
 Now we could successfully run the gateway. After it has been running successfully we could test if its working by:
 
-`curl http://localhost:8090/solaris/uaa/user -v`
+`curl http://localhost:8090/solaris/v1/persons -H "Authorization: Basic cGF5bWVudFVzZXIxOnBhc3N3b3Jk" -v`
+
+Make sure that you also provide the basic authentication credentials with your curl request
 
 #### Running with Docker
 
@@ -52,8 +48,9 @@ Now we could successfully run the gateway. After it has been running successfull
 
 `docker run sbg:$TAG`
 
->> Please see [Dockerfile](gateway/Dockerfile) 
->> of the image for furhter build args information
+> Please see [Dockerfile](gateway/Dockerfile) 
+> of the image for furhter build args information
+> or you could check [Makefile](Makefile) for more targets
 
 
 # CI/CD Pipeline
@@ -62,15 +59,14 @@ The CI/CD pipeline consists of two stages:
 
 * Build
 
-For build stage, the runner creates jars of gateway and resource-server and uploads them as artifacts.
+For build stage, the runner creates jars of gateway and solaris-mock-server and uploads them as artifacts.
 
 * Test
 
 For test stage, the runner collects the jars as artifacts and uses them in docker builds in a docker-compose job which creates the following containers:
 
 * gateway: the solaris-gateway itself
-* resouce-server: the custom resource server
-* uaa: oauth provider
+* solaris-mock-server: the custom resource and authentication server
 * test-runner: integration tests runner
 
 If `test-runner` container exits with exit code 0 the job succeeds else it fails.
