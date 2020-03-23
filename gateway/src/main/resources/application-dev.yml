@@ -2,6 +2,12 @@
 ##################################################################
 # Gateway Properties
 ##################################################################
+com:
+  finbyte:
+    solarisgateway:
+      logging:
+        global: true
+        elapsedtime: true
 
 ##################################################################
 # Other Properties
@@ -15,4 +21,4 @@ logging:
     org.springframework.web.reactive: DEBUG
     org.springframework.http.server.reactive: DEBUG
     org.springframework.cloud.gateway.handler.FilteringWebHandler: INFO
-    #reactor.netty: DEBUG
+    reactor.netty.http: DEBUG

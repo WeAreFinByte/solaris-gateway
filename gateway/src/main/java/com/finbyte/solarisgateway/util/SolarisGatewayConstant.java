@@ -23,6 +23,14 @@ public final class SolarisGatewayConstant {
     String NOT_PROD = "!" + PROD;
   }
 
+  public static final String ELAPSED_TIME_BEGIN = "elapsedTimeBegin";
+
+  public interface GatewayLogging {
+
+    String ENABLED_GLOBAL_LOGGING_FILTER_KEY = "com.finbyte.solarisgateway.logging.global";
+    String ENABLED_ELAPSED_TIME_LOGGING_FILTER_KEY = "com.finbyte.solarisgateway.logging.elapsedtime";
+  }
+
   public interface Auth {
 
     String JWT_PREFIX = "Bearer ";
