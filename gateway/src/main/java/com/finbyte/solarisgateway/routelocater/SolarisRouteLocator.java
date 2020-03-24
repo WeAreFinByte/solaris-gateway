@@ -21,6 +21,9 @@ public class SolarisRouteLocator {
   @Resource(name = "solarisRetryGatewayFilter")
   private GatewayFilter solarisRetryGatewayFilter;
 
+  @Resource(name = "solarisRateLimiterGatewayFilter")
+  private GatewayFilter solarisRateLimiterGatewayFilter;
+
   @Getter
   private String uri;
 
@@ -38,7 +41,7 @@ public class SolarisRouteLocator {
     return builder.routes()
         .route(ROUTER_ID, r -> r.path(prefix + "**") //
             .filters(f -> f.rewritePath(prefix + "(?<remains>.*)", "/${remains}") //
-                .filter(solarisRetryGatewayFilter)) //
+                .filter(solarisRetryGatewayFilter).filter(solarisRateLimiterGatewayFilter)) //
             .uri(uri))
         .build();
   }

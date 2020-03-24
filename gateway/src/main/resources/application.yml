@@ -48,6 +48,10 @@ spring:
   devtools:
     livereload:
       port: 35730
+  redis:
+    host: localhost
+    port: 6379
+
 
 management:
   endpoints:
