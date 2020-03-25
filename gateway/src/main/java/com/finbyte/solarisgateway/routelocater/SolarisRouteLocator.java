@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 @Component("solarisRouteLocator")
 public class SolarisRouteLocator {
 
-  protected final static String ROUTER_ID = "solarisgateway.main";
+  public final static String ROUTER_ID = "solarisgateway.main";
 
   @Resource(name = "solarisRetryGatewayFilter")
   private GatewayFilter solarisRetryGatewayFilter;

@@ -8,8 +8,8 @@ import static org.mockito.Mockito.verify;
 
 import com.finbyte.solarisgateway.auth.client.TokenClientService;
 import com.finbyte.solarisgateway.auth.client.impl.SolarisTokenClientService;
-import com.finbyte.solarisgateway.util.EnvironmentProperties;
 import com.finbyte.solarisgateway.util.OauthProvider;
+import com.finbyte.solarisgateway.util.properties.AuthProperties;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class TokenClientFactoryTest {
   private ApplicationContext applicationContext;
 
   @Mock
-  private EnvironmentProperties configuration;
+  private AuthProperties configuration;
 
   @Before
   public void init() {

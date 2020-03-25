@@ -5,20 +5,17 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR;
 
-import com.finbyte.solarisgateway.auth.AuthTokenService;
 import com.finbyte.solarisgateway.util.SolarisGatewayConstant.GatewayLogging;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.ratelimit.PrincipalNameKeyResolver;
 import org.springframework.cloud.gateway.route.Route;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -28,22 +25,7 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-public class GlobalFilterConfiguration {
-
-  //Global pre-request filter to add Authorization key and value to header
-  @Order(-2)
-  @Bean
-  public GlobalFilter globalAuthorizationHeaderFilter(@Qualifier("genericAuthTokenService") AuthTokenService authTokenService) {
-
-    return (exchange, chain) -> {
-
-      log.trace("Global filter will be execute and add the header ");
-      final ServerHttpRequest request = exchange.getRequest().mutate()
-          .header(HttpHeaders.AUTHORIZATION, authTokenService.getTokenWithJWTPrefix())
-          .build();
-      return chain.filter(exchange.mutate().request(request).build());
-    };
-  }
+public class GlobalFilterLoggingConfiguration {
 
   // Global filter to log user and redirection
   @Order()

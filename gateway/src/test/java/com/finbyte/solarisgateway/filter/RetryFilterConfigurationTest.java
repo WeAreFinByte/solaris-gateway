@@ -1,8 +1,8 @@
 package com.finbyte.solarisgateway.filter;
 
 import static com.finbyte.solarisgateway.filter.RetryFilterConfiguration.FILTER_ORDER;
-import static com.finbyte.solarisgateway.util.SolarisGatewayConstant.Retry.RETRY_COUNT;
 
+import com.finbyte.solarisgateway.util.properties.RetryProperties;
 import java.util.EnumSet;
 import java.util.List;
 import org.junit.Assert;
@@ -14,10 +14,9 @@ import org.springframework.cloud.gateway.filter.OrderedGatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.RetryGatewayFilterFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.TestPropertySource;
 
-@TestPropertySource(properties = RETRY_COUNT + "=" + 5)
-@SpringBootTest(classes = {RetryGatewayFilterFactory.class, RetryFilterConfiguration.class})
+@SpringBootTest(classes = {RetryProperties.class
+    ,RetryGatewayFilterFactory.class, RetryFilterConfiguration.class})
 public class RetryFilterConfigurationTest {
 
   @Autowired
@@ -26,12 +25,15 @@ public class RetryFilterConfigurationTest {
   @Autowired
   private RetryGatewayFilterFactory retryGatewayFilterFactory;
 
+  @Autowired
+  private RetryProperties retryProperties;
+
   @Test
   public void solarisRetryGatewayFilterTest() {
     //Given
 
     //When
-    final GatewayFilter gatewayFilter = retryFilterConfiguration.solarisRetryGatewayFilter(retryGatewayFilterFactory);
+    final GatewayFilter gatewayFilter = retryFilterConfiguration.solarisRetryGatewayFilter(retryGatewayFilterFactory, retryProperties);
 
     //Then
     Assert.assertNotNull(gatewayFilter);
@@ -45,11 +47,11 @@ public class RetryFilterConfigurationTest {
     //Given
 
     //When
-    final RetryGatewayFilterFactory.RetryConfig retryConfig = retryFilterConfiguration.getRetryConfig();
+    final RetryGatewayFilterFactory.RetryConfig retryConfig = retryFilterConfiguration.getRetryConfig(retryProperties);
 
     //Then
     Assert.assertNotNull(retryConfig);
-    Assert.assertEquals(5, retryConfig.getRetries());
+    Assert.assertEquals(2, retryConfig.getRetries());
 
     final EnumSet<HttpStatus> expectedStatuses = EnumSet.of(HttpStatus.UNAUTHORIZED);
     final List<HttpStatus> statuses = retryConfig.getStatuses();
