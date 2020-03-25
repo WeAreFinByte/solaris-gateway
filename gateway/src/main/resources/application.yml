@@ -5,7 +5,11 @@ com:
       uri: "http://localhost:8081"
       prefix : "/solaris/"
       retry:
-        count: 2
+        retries: 2
+        firstBackoff: 50
+        maxBackoff: 500
+        factor: 3
+        httpStatuses : [401]
       auth:
         provider: mock
         clientid: login-client

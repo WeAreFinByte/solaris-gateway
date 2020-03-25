@@ -2,8 +2,8 @@ package com.finbyte.solarisgateway.auth.impl;
 
 import com.finbyte.solarisgateway.auth.client.TokenClientService;
 import com.finbyte.solarisgateway.auth.client.impl.SolarisTokenClientService;
-import com.finbyte.solarisgateway.util.EnvironmentProperties;
 import com.finbyte.solarisgateway.util.OauthProvider;
+import com.finbyte.solarisgateway.util.properties.AuthProperties;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -17,14 +17,14 @@ public class TokenClientFactory {
   private ApplicationContext applicationContext;
 
   @Autowired
-  private EnvironmentProperties configuration;
+  private AuthProperties authProperties;
 
   @Bean("tokenClientService")
   public TokenClientService getClient() {
 
     final TokenClientService tokenClientService;
 
-    final OauthProvider oauthProvider = configuration.getOauthProvider();
+    final OauthProvider oauthProvider = authProperties.getOauthProvider();
 
     if (oauthProvider != null) {
       switch (oauthProvider) {

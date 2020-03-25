@@ -52,11 +52,6 @@ public final class SolarisGatewayConstant {
 
   }
 
-  public interface Retry {
-
-    String RETRY_COUNT = "com.finbyte.solarisgateway.retry.count";
-  }
-
   public interface AuthProviderEnumValue {
 
     String SOLARIS = "solaris";

@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 /**
  * Solaris Client implementation for Oauth Token Retrieval
@@ -28,9 +29,8 @@ public class SolarisTokenClientService extends AbstractTokenClientService {
     super(httpMethod, baseUri, uri, client_id, client_secret, grant_type);
   }
 
-
   @Override
-  public Token getToken() {
+  public Mono<GenericToken> getToken() {
     return webClient.method(HttpMethod.valueOf(getHttpMethod())).
         uri(u -> u.path(getUri()).replaceQueryParams(params).build())
         .header(HttpHeaders.AUTHORIZATION, "Basic " + Base64.getEncoder()
@@ -38,6 +38,7 @@ public class SolarisTokenClientService extends AbstractTokenClientService {
         .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         .retrieve().
-            bodyToMono(GenericToken.class).block();
+            bodyToMono(GenericToken.class);
   }
+
 }

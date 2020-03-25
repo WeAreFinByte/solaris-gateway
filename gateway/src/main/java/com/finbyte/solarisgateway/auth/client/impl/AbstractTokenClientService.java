@@ -2,7 +2,6 @@ package com.finbyte.solarisgateway.auth.client.impl;
 
 import com.finbyte.solarisgateway.auth.client.TokenClientService;
 import com.finbyte.solarisgateway.auth.client.dto.GenericToken;
-import com.finbyte.solarisgateway.auth.client.dto.Token;
 import lombok.Getter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -10,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 public abstract class AbstractTokenClientService implements TokenClientService {
 
@@ -66,12 +66,12 @@ public abstract class AbstractTokenClientService implements TokenClientService {
   }
 
   @Override
-  public Token getToken() {
+  public Mono<GenericToken> getToken() {
     return webClient.method(HttpMethod.valueOf(httpMethod)).
         uri(u -> u.path(uri).replaceQueryParams(params).build())
         .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         .retrieve().
-            bodyToMono(GenericToken.class).block();
+            bodyToMono(GenericToken.class);
   }
 }

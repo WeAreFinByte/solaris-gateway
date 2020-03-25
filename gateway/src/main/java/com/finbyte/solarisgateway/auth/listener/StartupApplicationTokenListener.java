@@ -1,5 +1,6 @@
 package com.finbyte.solarisgateway.auth.listener;
 
+import com.finbyte.solarisgateway.auth.TokenService;
 import com.finbyte.solarisgateway.auth.impl.RefreshTokenRunnable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 /**
  * Listener start a thread to get and refresh token from auth provider
  *
- * @see RefreshTokenRunnable#refreshToken
+ * @see TokenService#refreshToken()
  */
 @Component
 public class StartupApplicationTokenListener implements

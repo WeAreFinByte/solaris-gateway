@@ -2,21 +2,23 @@ package com.finbyte.solarisgateway.auth.impl;
 
 import static com.finbyte.solarisgateway.util.SolarisGatewayConstant.Auth.THRESHOLD_KEY;
 
-import com.finbyte.solarisgateway.auth.client.TokenClientService;
+import com.finbyte.solarisgateway.auth.TokenService;
 import com.finbyte.solarisgateway.auth.client.dto.GenericToken;
-import com.finbyte.solarisgateway.auth.client.dto.Token;
-import javax.annotation.Resource;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
 public class RefreshTokenRunnable implements Runnable {
 
-  @Resource(name = "tokenClientService")
-  private TokenClientService tokenClientService;
+  @Autowired
+  @Qualifier("genericTokenService")
+  private TokenService tokenService;
 
   @Setter
   @Value("${" + THRESHOLD_KEY + "}")
@@ -26,7 +28,6 @@ public class RefreshTokenRunnable implements Runnable {
 
   @Override
   public void run() {
-
     long now = System.currentTimeMillis();
 
     if (now > expireTime) {
@@ -36,17 +37,14 @@ public class RefreshTokenRunnable implements Runnable {
 
   private void refreshToken() {
 
-    try {
-      final Token token = tokenClientService.getToken();
-      final GenericToken genericToken = (GenericToken) token;
-      setExpireTime(genericToken.getExpiresIn());
-      TokenPool.getInstance().set(token);
+    final Mono<GenericToken> tokenPublisher = tokenService.refreshToken();
 
-      log.debug("Token refreshed expire time {}", expireTime);
-
-    } catch (Throwable t) {
-      log.error("Token cannot be get from provider  " + t.getMessage());
-    }
+    tokenPublisher//
+        .doOnError(t -> log.error("Token cannot be get from provider  " + t.getMessage()))//
+        .subscribe(token -> {
+          setExpireTime(token.getExpiresIn());
+          log.debug("Token refreshed expire time {}", expireTime);
+        });
   }
 
   private void setExpireTime(final Long expiresIn) {

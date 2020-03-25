@@ -1,9 +1,10 @@
 package com.finbyte.solarisgateway.auth.client;
 
-import com.finbyte.solarisgateway.auth.client.dto.Token;
+import com.finbyte.solarisgateway.auth.client.dto.GenericToken;
+import reactor.core.publisher.Mono;
 
 /**
- *  Client Service to retrieve
+ * Client Service to retrieve
  */
 public interface TokenClientService {
 
@@ -12,6 +13,6 @@ public interface TokenClientService {
    *
    * @return New Auth Token from provider
    */
-  Token getToken();
+  Mono<GenericToken> getToken();
 
 }
