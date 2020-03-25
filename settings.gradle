@@ -1,4 +1,3 @@
 rootProject.name = 'solaris-gateaway'
 
 include 'gateway'
-include 'solaris-mock-server'
