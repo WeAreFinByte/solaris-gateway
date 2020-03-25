@@ -27,17 +27,22 @@ public class SolarisRouteLocator {
   @Getter
   private String prefix;
 
+  @Getter
+  private String targetPrefix;
+
   public SolarisRouteLocator(@Value("${" + SolarisGatewayConstant.RouteLocator.DEFAULT_URI_KEY + "}") String uri,
-      @Value("${" + SolarisGatewayConstant.RouteLocator.DEFAULT_PREFIX_KEY + "}") String prefix) {
+      @Value("${" + SolarisGatewayConstant.RouteLocator.DEFAULT_PREFIX_KEY + "}") String prefix,
+      @Value("${" + SolarisGatewayConstant.RouteLocator.DEFAULT_TARGET_PREFIX_KEY + "}") String targetPrefix) {
     this.uri = uri;
     this.prefix = prefix;
+    this.targetPrefix = targetPrefix;
   }
 
   @Bean
   public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
     return builder.routes()
         .route(ROUTER_ID, r -> r.path(prefix + "**") //
-            .filters(f -> f.rewritePath(prefix + "(?<remains>.*)", "/${remains}") //
+            .filters(f -> f.rewritePath(prefix + "(?<remains>.*)", targetPrefix + "${remains}") //
                 .filter(solarisRetryGatewayFilter)) //
             .uri(uri))
         .build();

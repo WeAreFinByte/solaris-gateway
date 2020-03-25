@@ -14,6 +14,7 @@ public final class SolarisGatewayConstant {
 
     String DEFAULT_URI_KEY = "com.finbyte.solarisgateway.uri";
     String DEFAULT_PREFIX_KEY = "com.finbyte.solarisgateway.prefix";
+    String DEFAULT_TARGET_PREFIX_KEY = "com.finbyte.solarisgateway.targetprefix";
   }
 
   public interface EnvironmentProfileName {

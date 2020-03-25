@@ -4,6 +4,7 @@ com:
     solarisgateway:
       uri: "http://localhost:8081"
       prefix : "/solaris/"
+      targetprefix: "/v1/"
       retry:
         retries: 2
         firstBackoff: 50
