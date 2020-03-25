@@ -10,7 +10,7 @@ services:
     ports:
       - "8090:8090"
   solaris-mock-server:
-    build: ../solaris-mock-server
+    image:
     ports:
       - "8081:8081"
   test-runner:

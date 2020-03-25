@@ -10,7 +10,6 @@ jar_gateway:
   artifacts:
     paths:
       - /builds/finbyte/solaris-gateaway/gateway/build/libs/
-      - /builds/finbyte/solaris-gateaway/solaris-mock-server/build/libs/
 
 build_docker_compose:
   image: tmaier/docker-compose:latest
