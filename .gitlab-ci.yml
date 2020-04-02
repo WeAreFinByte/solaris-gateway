@@ -31,6 +31,7 @@ build_docker_compose:
   before_script:
     - docker info
     - docker-compose --version
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   stage: test
   script:
     - make test_integration
