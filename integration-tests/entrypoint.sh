@@ -17,7 +17,7 @@ wait-for-url() {
 
 trap 'err_report $LINENO' ERR
 
-urls=( http://gateway:8090/solaris/v1/persons http://gateway:8090/solaris/v1/accounts )
+urls=( http://gateway:8090/solaris/persons http://gateway:8090/solaris/accounts )
 wait-for-url
 sleep 15
 
