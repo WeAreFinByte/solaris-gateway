@@ -11,6 +11,19 @@ jar_gateway:
     paths:
       - /builds/finbyte/solaris-gateaway/gateway/build/libs/
 
+get_mock_image:
+  stage: build
+  image: docker:19.03.1
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker pull $CI_REGISTRY/finbyte/solaris-mock-server/solaris-mock-server:latest
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:19.03.1-dind
+
 build_docker_compose:
   image: tmaier/docker-compose:latest
   services:
@@ -18,6 +31,7 @@ build_docker_compose:
   before_script:
     - docker info
     - docker-compose --version
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   stage: test
   script:
     - make test_integration

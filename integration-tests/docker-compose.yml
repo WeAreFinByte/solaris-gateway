@@ -10,7 +10,7 @@ services:
     ports:
       - "8090:8090"
   solaris-mock-server:
-    image:
+    image: $CI_REGISTRY/finbyte/solaris-mock-server/solaris-mock-server:latest
     ports:
       - "8081:8081"
   test-runner:
